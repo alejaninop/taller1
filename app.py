@@ -21,7 +21,10 @@ app.config.suppress_callback_exceptions = True
 
 # Load data from csv
 def load_data():
-    # To do: Completar la funciÃ³n 
+    df = pd.read_csv("datos_energia.csv")
+    df["time"] = pd.to_datetime(df["time"])
+    df.set_index("time", inplace=True)
+    return df
     
 
 # Cargar datos
@@ -98,10 +101,10 @@ def description_card():
         id="description-card",
         children=[
             #html.H5("Proyecto 1"),
-            html.H3("PronÃ³stico de producciÃ³n energÃ©tica"),
+            html.H3("Pronostico de produccion energetica"),
             html.Div(
                 id="intro",
-                children="Esta herramienta contiene informaciÃ³n sobre la demanda energÃ©tica total en Austria cada hora segÃºn lo pÃºblicado en ENTSO-E Data Portal. Adicionalmente, permite realizar pronÃ³sticos hasta 5 dias en el futuro."
+                children="Esta herramienta contiene informacion sobre la demanda energetica total en Austria cada hora segun lo publicado en ENTSO-E Data Portal. Adicionalmente, permite realizar pronosticos hasta 5 dias en el futuro."
             ),
         ],
     )
@@ -203,7 +206,7 @@ app.layout = html.Div(
                 html.Div(
                     id="model_graph",
                     children=[
-                        html.B("Demanda energÃ©tica total en Austria [MW]"),
+                        html.B("Demanda energetica total en Austria [MW]"),
                         html.Hr(),
                         dcc.Graph(
                             id="plot_series",  
@@ -240,4 +243,4 @@ def update_output_div(date, hour, proy):
 
 # Run the server
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run(debug=True)
